@@ -14,9 +14,21 @@
 //     containsTwice(10, [10, 10, 10, 10, 10]);
 //     //=> false
 //
-var containsTwice = function () {
-};
+var containsTwice = function (element, arr) {
+    var result = [];
+    var i;
 
+    for (i = 0; i < arr.length; i = i + 1) {
+        if (arr[i] === (element)) {
+            result.push(arr[i]);
+        }
+    }
+    return (result.length === 2);
+};
+containsTwice("hello", [ "hello", "world", "hello" ]);
+containsTwice(true, [ true, false, false, true ]);
+containsTwice(10, [10, 10, 10, 10, 10]);
+containsTwice(5, [1, 2, 3, 4, 5]);
 
 // Generalize the previous solution into a function called `containsNTimes` so
 // that it can check for a value an arbitrary number of times.
@@ -30,8 +42,20 @@ var containsTwice = function () {
 //     containsNTimes(0, 5, [ 1, 2, 3, 4, 5 ]);
 //     //=> false
 //
-var containsNTimes = function () {
+var containsNTimes = function (n, element, arr) {
+    var result = [];
+    var i;
+
+    for (i = 0; i < arr.length; i = i + 1) {
+        if (arr[i] === (element)) {
+            result.push(arr[i]);
+        }
+    }
+    return (result.length === n);
 };
+containsNTimes(3, "hello", [ "hello", "hello", "hello" ]);
+containsNTimes(5, true, [ true, true, true, true, false ]);
+containsNTimes(0, 5, [ 1, 2, 3, 4, 5 ]);
 
 
 // Write a function called `atLeastOneEven` that returns `true` if at least one of
@@ -50,9 +74,27 @@ var containsNTimes = function () {
 //     atLeastOneEven("hello");
 //     //=> input should be an array!
 //
-var atLeastOneEven = function () {
-};
+var atLeastOneEven = function (arr) {
+    var result = [];
+    var i;
+    if (Array.isArray(arr)) {
+        for (i=0; i<arr.length; i=i+1) {
 
+            if (arr[i] % 2 === 0) {
+                result.push(arr[i]);
+            }
+
+        }
+        return (result.length >= 1);
+
+    } else {
+        console.log("input should be an array!");
+    }
+};
+atLeastOneEven([ 3, 5, 6, 7, 9 ]);
+atLeastOneEven([]);
+atLeastOneEven([ 101, 203, 401 ]);
+atLeastOneEven("hello");
 
 // Write a function called `allStrings` that accepts an array as an argument and
 // returns `true` if all of the values in the array are strings. It should
@@ -70,9 +112,29 @@ var atLeastOneEven = function () {
 // Although the tests will not be checking for this, try to make your loop exit
 // as soon as it finds a non-string entry in the array.
 //
-var allStrings = function () {
-};
+var allStrings = function (arr) {
+    var result = true;
+    var i;
 
+    if (Array.isArray(arr)) {
+
+        for (i=0; i<arr.length; i=i+1) {
+            if (typeof arr[i] === "string"){
+                result = true;
+            } else {
+                result = false;
+            }
+        }
+        return result;
+
+    } else {
+        console.log("input should be an array!");
+    }
+};
+allStrings([ "these", "are", "all", "strings" ]);
+allStrings([ "these", "are", "not", 5 ]);
+allStrings([ ]);
+allStrings("hello");
 
 // Write a function that accepts two arrays, and returns true if any of the
 // values in the first array appear twice in the second array. You might want to
@@ -96,9 +158,27 @@ var allStrings = function () {
 // as soon as it finds an element in the first array that appears twice in the second
 // array.
 //
-var containsAnyTwice = function () {
+var containsAnyTwice = function (arr1, arr2) {
+    var result;
+    var i;
+
+    if (Array.isArray(arr1) && Array.isArray(arr2)) {
+        for (i=0; i<arr2.length; i=i+1) {
+        result = containsTwice(arr1[i], arr2);
+            if(result) {
+                break
+            }
+        }
+        return result;
+    } else {
+        console.log("containsAnyTwice expects two arguments, both of which should be an array.");
+    }
 };
 
+containsAnyTwice([1, 2], ["hello", 1, "world", 1]);
+containsAnyTwice([], ["always", "will", "return", "false"]);
+containsAnyTwice(["hello", "world"], ["hello", "hello", "world", "world"]);
+containsAnyTwice("hello", ["hello", "world"]);
 
 // In the previous problem, we determined whether or not an array contains any
 // of a list of values exactly twice. In this problem, we'll actually return
@@ -125,10 +205,23 @@ var containsAnyTwice = function () {
 //     getValuesAppearingTwice(["hello", "world", "goodbye"])
 //     //=> []
 //
-var getValuesAppearingTwice = function () {
+var getValuesAppearingTwice = function (arr) {
+    var result = [];
+    var i;
+
+    for (i=0; i<arr.length; i=i+1) {
+
+        if ( (containsTwice(arr[i], arr)) && (result.indexOf(arr[i]) === -1) ) {
+            result.push(arr[i]);
+        }
+    }
+    console.log(result);
 };
 
-
+getValuesAppearingTwice(["hello", 1, "world", 1]);
+getValuesAppearingTwice(["always", "will", "return", "empty"]);
+getValuesAppearingTwice(["hello", "hello", "world", "world", "goodbye"]);
+getValuesAppearingTwice(["hello", "world", "goodbye"])
 // Using a standard `for` loop, along with the `push` function, write a function
 // called `range` that accepts two numbers, `begin` and `end`, and returns an array
 // that contains all of the integers starting at `begin` and ending at `end`
